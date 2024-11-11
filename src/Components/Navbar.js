@@ -1,9 +1,21 @@
-import React from 'react'
+// src/components/Navbar.js
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { AppBar, Toolbar, Button } from '@mui/material';
 
-export default function Navbar() {
+function Navbar() {
   return (
-    <div>
-      NabBar
-    </div>
-  )
+    <AppBar position="static" color="transparent">
+      <Toolbar>
+        <Button color="inherit" component={Link} to="/">Home</Button>
+        <Button color="inherit" component={Link} to="/about">About</Button>
+        <Button color="inherit" component={Link} to="/projects">Projects</Button>
+        <Button color="inherit" component={Link} to="/skills">Skills</Button>
+        <Button color="inherit" component={Link} to="/experience">Experience</Button>
+        <Button color="inherit" component={Link} to="/contact">Contact</Button>
+      </Toolbar>
+    </AppBar>
+  );
 }
+
+export default Navbar;
