@@ -1,61 +1,71 @@
-import React from "react";
-import { Card, CardContent, CardActions, Typography, Button, CardMedia, Chip} from "@mui/material";
-import { styled } from "@mui/system";
+// src/components/ProjectCard.js
+import React from 'react';
+import { Card, CardContent, Typography, Button, CardMedia, Box } from '@mui/material';
+import { motion } from 'framer-motion';
+import { GitHub, Launch } from '@mui/icons-material';
 
-const StyledCard = styled(Card)(({ theme }) => ({
-  position: "relative",
-  width: "100%",
-  maxWidth: 345,
-  margin: "auto", 
-  transition: "all 0.2s ease-in-out", 
-  boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-  "&:hover": {
-    boxShadow: "0px 6px 12px rgba(0, 0, 0, 0.15)", 
-    transform: "scale(1.02)",
-  },
-}));
+const placeholderImage = 'https://via.placeholder.com/300x160?text=Project+Image';
 
-const FeaturedBadge = styled(Chip)({
-  position: "absolute",
-  top: "16px",
-  right: "16px",
-  backgroundColor: "#ff5733",
-  color: "white",
-  fontWeight: "bold",
-});
 
-function ProjectCard({ title, description, techStack, link, github, image, isFeatured }) {
+function ProjectCard({ title, description, techStack, github, liveDemo, image = placeholderImage }) {
   return (
-    <Card>
-      <StyledCard>
-        {isFeatured && <FeaturedBadge label="Featured" />}
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      <Card sx={{
+        borderRadius: '12px',
+        boxShadow: 3,
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
+        transition: 'transform 0.3s ease-in-out',
+        "&:hover": {
+          transform: 'scale(1.02)',
+        },
+      }}>
+        {/* Responsive Image Section */}
         <CardMedia
           component="img"
-          height="140"
-          image={image || "https://via.placeholder.com/345x140"}
-          alt={`${title} project`}
+          height="160"
+          image={image} // replace with actual image URL or prop if provided
+          alt={`${title} project image`}
         />
         <CardContent>
-          <Typography variant="h6" component="div" gutterBottom>
+          <Typography variant="h6" color="primary" gutterBottom>
             {title}
           </Typography>
           <Typography variant="body2" color="textSecondary" paragraph>
             {description}
           </Typography>
-          <Typography variant="subtitle2" color="primary">
-            {techStack}
+          <Typography variant="body2" color="textSecondary">
+            <strong>Tech Stack:</strong> {techStack.join(', ')}
           </Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', marginTop: 2 }}>
+            <Button
+              variant="outlined"
+              color="primary"
+              href={github}
+              target="_blank"
+              startIcon={<GitHub />}
+              sx={{ marginRight: 1 }}
+            >
+              GitHub
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              href={liveDemo}
+              target="_blank"
+              startIcon={<Launch />}
+            >
+              Live Demo
+            </Button>
+          </Box>
         </CardContent>
-        <CardActions>
-          <Button size="small" variant="contained" color="primary" href={link} target="_blank">
-            Live Demo
-          </Button>
-          <Button size="small" variant="outlined" color="secondary" href={github} target="_blank">
-            GitHub
-          </Button>
-        </CardActions>
-      </StyledCard>
-    </Card>
+      </Card>
+    </motion.div>
   );
 }
 
